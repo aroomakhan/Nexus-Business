@@ -105,7 +105,7 @@ const io = new Server(server, {
 
 // 2. Middleware
 app.use(cors({
-  origin: "https://nexus-business-34kg.vercel.app", // Use your ACTUAL frontend Vercel URL
+  origin: ["http://localhost:5173", "https://nexus-business-34kg.vercel.app"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
@@ -160,7 +160,7 @@ io.on("connection", (socket) => {
 });
 
 // const PORT = process.env.PORT || 5000;
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 5000;
 
 mongoose.connect(process.env.MONGO_URI)
 
