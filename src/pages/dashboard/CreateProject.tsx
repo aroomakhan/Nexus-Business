@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext'; // 1. Import your auth hook
 
+
+
 const CreateProject = () => {
   const { user } = useAuth(); // 2. Get the real-time user object from your context
   
