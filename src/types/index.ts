@@ -5,9 +5,21 @@ export interface User {
   name: string;
   email: string;
   role: UserRole;
+  balance: number;
   avatarUrl: string;
   bio: string;
   isOnline?: boolean;
+  createdAt: string;
+}
+
+// ✅ NEW: Transaction interface to support Milestone 6
+export interface Transaction {
+  id: string;
+  userId: string;
+  type: 'deposit' | 'withdrawal' | 'transfer' | 'payment';
+  amount: number;
+  status: 'Pending' | 'Completed' | 'Failed';
+  description: string;
   createdAt: string;
 }
 
@@ -52,6 +64,9 @@ export interface CollaborationRequest {
   id: string;
   investorId: string;
   entrepreneurId: string;
+  projectId: string;
+  investorName?: string; 
+  projectName?: string;  
   message: string;
   status: 'pending' | 'accepted' | 'rejected';
   createdAt: string;
@@ -76,6 +91,7 @@ export interface AuthContextType {
   forgotPassword: (email: string) => Promise<void>;
   resetPassword: (token: string, newPassword: string) => Promise<void>;
   updateProfile: (userId: string, updates: Partial<User>) => Promise<void>;
+  refreshUser: () => Promise<void>; // ✅ Confirmed
   isAuthenticated: boolean;
   isLoading: boolean;
 }

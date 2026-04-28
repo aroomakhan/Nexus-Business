@@ -16,20 +16,39 @@ export const LoginPage: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    setIsLoading(true);
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setError(null);
+  setIsLoading(true);
+  
+  try {
+    // 1. Send the login request
+    // Note: 'role' here is the state from your button selection
+    await login(email, password, role);
     
-    try {
-      await login(email, password, role);
-      // Redirect based on user role
-      navigate(role === 'entrepreneur' ? '/dashboard/entrepreneur' : '/dashboard/investor');
-    } catch (err) {
-      setError((err as Error).message);
-      setIsLoading(false);
+    // 2. Instead of relying on 'role' state, check what the server actually sent back
+    const storedUser = localStorage.getItem('business_nexus_user');
+    if (storedUser) {
+      const actualUser = JSON.parse(storedUser);
+      const userRole = actualUser.role.toLowerCase(); // Force lowercase check
+
+      console.log("Logged in user role:", userRole);
+
+      if (userRole === 'entrepreneur') {
+        navigate('/dashboard/entrepreneur');
+      } else if (userRole === 'investor') {
+        navigate('/dashboard/investor');
+      }
     }
-  };
+  } catch (err) {
+    // This is where your "Invalid email or password" is caught
+    setError((err as Error).message);
+  } finally {
+    setIsLoading(false);
+  }
+};
+  
   
   // For demo purposes, pre-filled credentials
   const fillDemoCredentials = (userRole: UserRole) => {

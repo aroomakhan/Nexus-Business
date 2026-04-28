@@ -26,24 +26,37 @@ import { DocumentsPage } from './pages/documents/DocumentsPage';
 import { SettingsPage } from './pages/settings/SettingsPage';
 import { HelpPage } from './pages/help/HelpPage';
 import { DealsPage } from './pages/deals/DealsPage';
+import { PaymentsPage } from './pages/payments/PaymentsPage';
 
 // Chat Pages
 import { ChatPage } from './pages/chat/ChatPage';
+
+import CreateProject from './pages/dashboard/CreateProject';
+
+import { VideoCall } from './components/VideoCall';
+import { DocumentChamber } from './pages/documents/DocumentChamber';
+
 
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Routes>
+          
           {/* Authentication Routes */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+
+          {/* VIDEO CALL ROUTE */}
+          <Route path="/video-call/:roomId" element={<VideoCall />} />
           
           {/* Dashboard Routes */}
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route path="entrepreneur" element={<EntrepreneurDashboard />} />
             <Route path="investor" element={<InvestorDashboard />} />
+            <Route path="create-project" element={<CreateProject />} /> 
           </Route>
+          
           
           {/* Profile Routes */}
           <Route path="/profile" element={<DashboardLayout />}>
@@ -70,6 +83,7 @@ function App() {
           
           <Route path="/documents" element={<DashboardLayout />}>
             <Route index element={<DocumentsPage />} />
+            <Route path="chamber/:docId" element={<DocumentChamber />} />
           </Route>
           
           <Route path="/settings" element={<DashboardLayout />}>
@@ -82,6 +96,11 @@ function App() {
           
           <Route path="/deals" element={<DashboardLayout />}>
             <Route index element={<DealsPage />} />
+          </Route>
+
+          {/* --- NEW PAYMENTS ROUTE --- */}
+          <Route path="/payments" element={<DashboardLayout />}>
+            <Route index element={<PaymentsPage />} />
           </Route>
           
           {/* Chat Routes */}

@@ -19,6 +19,9 @@ export const Navbar: React.FC = () => {
     navigate('/login');
   };
   
+
+
+  
   // User dashboard route based on role
   const dashboardRoute = user?.role === 'entrepreneur' 
     ? '/dashboard/entrepreneur' 
