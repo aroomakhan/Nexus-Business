@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import Peer from 'simple-peer';
 import { useParams, useNavigate } from 'react-router-dom';
 
-const socket = io('http://localhost:5000');
+const socket = io('${API_BASE_URL}');
 
 export const VideoCall = () => {
   const { roomId } = useParams(); // Gets ID from URL

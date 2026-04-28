@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 const calendarStyles = `
   .react-calendar__month-view__days {
@@ -36,7 +37,7 @@ export const MeetingCalendar = () => {
 
   const handleStatusUpdate = async (meetingId: string, action: 'accept' | 'reject') => {
     try {
-      await axios.patch(`http://localhost:5000/api/meetings/${meetingId}/${action}`);
+      await axios.patch(`${API_BASE_URL}/api/meetings/${meetingId}/${action}`);
       alert(`Meeting ${action}ed successfully!`);
       window.location.reload(); 
     } catch (err) {
@@ -52,7 +53,7 @@ export const MeetingCalendar = () => {
         if (!storedData) return;
         const userData = JSON.parse(storedData);
         const userId = userData.id || userData._id;
-        const res = await axios.get(`http://localhost:5000/api/meetings/user/${userId}`);
+        const res = await axios.get(`${API_BASE_URL}/api/meetings/user/${userId}`);
         setMeetings(res.data);
       } catch (err) {
         console.error("Error fetching meetings", err);

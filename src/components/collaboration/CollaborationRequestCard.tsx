@@ -104,7 +104,7 @@ export const CollaborationRequestCard: React.FC<CollaborationRequestCardProps> =
         description: `Meeting regarding project: ${request.projectName}`
       };
 
-      await axios.post('http://localhost:5000/api/meetings/schedule', meetingData);
+      await axios.post('${API_BASE_URL}/api/meetings/schedule', meetingData);
       
       alert("✅ Meeting Scheduled Successfully!");
       

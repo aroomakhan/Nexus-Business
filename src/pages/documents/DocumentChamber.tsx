@@ -6,6 +6,7 @@ import { SignaturePad } from '../../components/SignaturePad';
 import { Card, CardHeader, CardBody } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import axios from 'axios';
+import { API_BASE_URL } from '../../config';
 
 export const DocumentChamber: React.FC = () => {
   const { docId } = useParams();
@@ -20,13 +21,13 @@ export const DocumentChamber: React.FC = () => {
     const fetchDocument = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:5000/api/documents/${docId}`);
+        const response = await axios.get(`${API_BASE_URL}/api/documents/${docId}`);
         
         let data = response.data;
 
         if (data.fileUrl && !data.fileUrl.startsWith('http')) {
             const fileName = data.fileUrl.split(/[\\/]/).pop();
-            data.fileUrl = `http://localhost:5000/uploads/${fileName}`;
+            data.fileUrl = `${API_BASE_URL}/uploads/${fileName}`;
         }
 
         setDocumentData(data);
@@ -48,7 +49,7 @@ export const DocumentChamber: React.FC = () => {
 
   const handleSignatureSave = async (signatureData: string) => {
     try {
-      const response = await axios.put(`http://localhost:5000/api/documents/sign/${docId}`, {
+      const response = await axios.put(`${API_BASE_URL}/api/documents/sign/${docId}`, {
         signatureImage: signatureData,
       });
 

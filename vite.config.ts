@@ -22,7 +22,7 @@ export default defineConfig({
     port: 5173,
     // Optional: Helping Vite find your backend files
     proxy: {
-      '/uploads': 'http://localhost:5000',
+      '/uploads': '${API_BASE_URL}',
     }
   }
 });

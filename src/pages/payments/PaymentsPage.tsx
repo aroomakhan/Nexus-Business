@@ -8,6 +8,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Card, CardHeader, CardBody } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
+import { API_BASE_URL } from '../../config';
 
 export const PaymentsPage: React.FC = () => {
   const { user, refreshUser } = useAuth();
@@ -17,7 +18,7 @@ export const PaymentsPage: React.FC = () => {
   const fetchHistory = async () => {
     try {
       if (!user?.id) return;
-      const res = await axios.get(`http://localhost:5000/api/payments/history/${user.id}`);
+      const res = await axios.get(`${API_BASE_URL}/api/payments/history/${user.id}`);
       setTransactions(res.data);
     } catch (err) {
       console.error("Error fetching payments:", err);
@@ -37,7 +38,7 @@ export const PaymentsPage: React.FC = () => {
     const amount = Number(amountStr);
 
     try {
-      await axios.post('http://localhost:5000/api/payments/mock-deposit', {
+      await axios.post('${API_BASE_URL}/api/payments/mock-deposit', {
         userId: user?.id,
         amount: amount,
         description: "Funds added via Dashboard"
@@ -63,7 +64,7 @@ export const PaymentsPage: React.FC = () => {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/payments/withdraw', {
+      await axios.post('${API_BASE_URL}/api/payments/withdraw', {
         userId: user?.id,
         amount: amount,
         description: "Withdrawal to external account"
@@ -93,7 +94,7 @@ export const PaymentsPage: React.FC = () => {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/payments/transfer', {
+      await axios.post('${API_BASE_URL}/api/payments/transfer', {
         senderId: user?.id,
         recipientEmail: email,
         amount: amount,

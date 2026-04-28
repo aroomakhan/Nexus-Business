@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { User, UserRole, AuthContextType } from '../types';
 import toast from 'react-hot-toast';
+import { API_BASE_URL } from '../config';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const USER_STORAGE_KEY = 'business_nexus_user';
@@ -35,7 +36,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (!userId) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/auth/profile/${userId}`);
+      const response = await fetch(`${API_BASE_URL}/api/auth/profile/${userId}`);
       const data = await response.json();
       
       if (response.ok) {
@@ -66,7 +67,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (email: string, password: string, role: UserRole): Promise<void> => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch('${API_BASE_URL}/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, role }),
@@ -103,7 +104,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const register = async (name: string, email: string, password: string, role: UserRole): Promise<void> => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/auth/register', {
+      const response = await fetch('${API_BASE_URL}/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password, role }),
@@ -216,7 +217,7 @@ export const useAuth = () => {
 //   const refreshUser = async () => {
 //     if (!user?.id) return;
 //     try {
-//       const response = await fetch(`http://localhost:5000/api/auth/profile/${user.id}`);
+//       const response = await fetch(`${API_BASE_URL}/api/auth/profile/${user.id}`);
 //       const data = await response.json();
       
 //       if (response.ok) {
@@ -242,7 +243,7 @@ export const useAuth = () => {
 //   const login = async (email: string, password: string, role: UserRole): Promise<void> => {
 //     setIsLoading(true);
 //     try {
-//       const response = await fetch('http://localhost:5000/api/auth/login', {
+//       const response = await fetch('${API_BASE_URL}/api/auth/login', {
 //         method: 'POST',
 //         headers: { 'Content-Type': 'application/json' },
 //         body: JSON.stringify({ email, password, role }),
@@ -280,7 +281,7 @@ export const useAuth = () => {
 //   const register = async (name: string, email: string, password: string, role: UserRole): Promise<void> => {
 //     setIsLoading(true);
 //     try {
-//       const response = await fetch('http://localhost:5000/api/auth/register', {
+//       const response = await fetch('${API_BASE_URL}/api/auth/register', {
 //         method: 'POST',
 //         headers: { 'Content-Type': 'application/json' },
 //         body: JSON.stringify({ name, email, password, role }),

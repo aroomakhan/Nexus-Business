@@ -29,7 +29,7 @@ export const InvestorDashboard: React.FC = () => {
   useEffect(() => {
     const fetchAllProjects = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/projects');
+        const res = await axios.get('${API_BASE_URL}/api/projects');
         setProjects(res.data);
       } catch (err) {
         console.error("Error fetching projects:", err);
@@ -69,7 +69,7 @@ export const InvestorDashboard: React.FC = () => {
 
   const handleConnect = async (projectId: string, entrepreneurId: string) => {
   try {
-    const res = await axios.post('http://localhost:5000/api/connections', {
+    const res = await axios.post('${API_BASE_URL}/api/connections', {
       investorId: user.id,
       entrepreneurId: entrepreneurId,
       projectId: projectId,
