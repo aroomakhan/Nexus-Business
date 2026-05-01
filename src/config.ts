@@ -1,6 +1,8 @@
+// 1. Comment out or delete the line that is causing the error:
+// export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://nexus-business-name.vercel.app";
 
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://nexus-business-lemon.vercel.app";
-// export const API_BASE_URL = (import.meta as any).env.VITE_API_BASE_URL || "https://nexus-business-lemon.vercel.app";
+// 2. Use this version instead (The "any" cast tells TypeScript to stop complaining):
+export const API_BASE_URL = (import.meta as any).env.VITE_API_BASE_URL || "https://nexus-business-lemon.vercel.app";
 
-// For Socket.io specifically (since it needs a slightly different protocol handling sometimes)
+// 3. Keep your socket URL as is
 export const SOCKET_URL = API_BASE_URL;
