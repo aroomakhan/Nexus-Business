@@ -1,0 +1,120 @@
+{
+  "hash": "5a7b8dc1",
+  "configHash": "a02e0fcc",
+  "lockfileHash": "63fb619b",
+  "browserHash": "48d60ca6",
+  "optimized": {
+    "@react-pdf-viewer/core": {
+      "src": "../../node_modules/@react-pdf-viewer/core/lib/index.js",
+      "file": "@react-pdf-viewer_core.js",
+      "fileHash": "a8703337",
+      "needsInterop": true
+    },
+    "@react-pdf-viewer/default-layout": {
+      "src": "../../node_modules/@react-pdf-viewer/default-layout/lib/index.js",
+      "file": "@react-pdf-viewer_default-layout.js",
+      "fileHash": "aa6fb36c",
+      "needsInterop": true
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "d19e45e1",
+      "needsInterop": false
+    },
+    "buffer": {
+      "src": "../../node_modules/buffer/index.js",
+      "file": "buffer.js",
+      "fileHash": "fd07366e",
+      "needsInterop": true
+    },
+    "date-fns": {
+      "src": "../../node_modules/date-fns/index.mjs",
+      "file": "date-fns.js",
+      "fileHash": "1b79e1aa",
+      "needsInterop": false
+    },
+    "lucide-react": {
+      "src": "../../node_modules/lucide-react/dist/esm/lucide-react.js",
+      "file": "lucide-react.js",
+      "fileHash": "13bf3511",
+      "needsInterop": false
+    },
+    "react-calendar": {
+      "src": "../../node_modules/react-calendar/dist/index.js",
+      "file": "react-calendar.js",
+      "fileHash": "3c1eca53",
+      "needsInterop": false
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "f25ee1c0",
+      "needsInterop": true
+    },
+    "react-hot-toast": {
+      "src": "../../node_modules/react-hot-toast/dist/index.mjs",
+      "file": "react-hot-toast.js",
+      "fileHash": "540364c0",
+      "needsInterop": false
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.js",
+      "file": "react-router-dom.js",
+      "fileHash": "e44ce676",
+      "needsInterop": false
+    },
+    "react-signature-canvas": {
+      "src": "../../node_modules/react-signature-canvas/dist/index.mjs",
+      "file": "react-signature-canvas.js",
+      "fileHash": "e8b2801b",
+      "needsInterop": false
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "affa349f",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "167c8953",
+      "needsInterop": true
+    },
+    "simple-peer": {
+      "src": "../../node_modules/simple-peer/index.js",
+      "file": "simple-peer.js",
+      "fileHash": "4b6b4af6",
+      "needsInterop": true
+    },
+    "socket.io-client": {
+      "src": "../../node_modules/socket.io-client/build/esm/index.js",
+      "file": "socket__io-client.js",
+      "fileHash": "e4b17b91",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "browser-CaGxIphW": {
+      "file": "browser-CaGxIphW.js",
+      "isDynamicEntry": false
+    },
+    "buffer-Bp4-Lh28": {
+      "file": "buffer-Bp4-Lh28.js",
+      "isDynamicEntry": false
+    },
+    "chunk-YKewjYmz": {
+      "file": "chunk-YKewjYmz.js",
+      "isDynamicEntry": false
+    },
+    "lib-D3kOnaUo": {
+      "file": "lib-D3kOnaUo.js",
+      "isDynamicEntry": false
+    },
+    "react-dom-B68Csswg": {
+      "file": "react-dom-B68Csswg.js",
+      "isDynamicEntry": false
+    }
+  }
+}
