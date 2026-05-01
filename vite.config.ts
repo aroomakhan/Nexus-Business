@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  base: process.env.VITE_API_BASE_URL,
   
   define: {
     // This ensures libraries like 'simple-peer' don't crash in the browser
