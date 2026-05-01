@@ -8,6 +8,7 @@ import { Input } from '../../components/ui/Input';
 import { Badge } from '../../components/ui/Badge';
 import { useAuth } from '../../context/AuthContext';
 import { MeetingCalendar } from '../../components/MeetingCalendar';
+import API from '../../api/axios'; // Import the new middleman
 
 // Define the Project interface
 interface Project {
@@ -29,7 +30,7 @@ export const InvestorDashboard: React.FC = () => {
   useEffect(() => {
     const fetchAllProjects = async () => {
       try {
-        const res = await axios.get('${API_BASE_URL}/api/projects');
+        const res = await API.get('${API_BASE_URL}/api/projects');
         setProjects(res.data);
       } catch (err) {
         console.error("Error fetching projects:", err);
@@ -69,7 +70,7 @@ export const InvestorDashboard: React.FC = () => {
 
   const handleConnect = async (projectId: string, entrepreneurId: string) => {
   try {
-    const res = await axios.post('${API_BASE_URL}/api/connections', {
+    const res = await API.post('${API_BASE_URL}/api/connections', {
       investorId: user.id,
       entrepreneurId: entrepreneurId,
       projectId: projectId,

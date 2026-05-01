@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext'; // 1. Import your auth hook
-
+import API from '../../api/axios'; // Import the new middleman
 
 
 const CreateProject = () => {
@@ -44,7 +44,7 @@ const CreateProject = () => {
       console.log("Sending project to server:", newProject);
 
       // 4. Send request to backend
-      const res = await axios.post('${API_BASE_URL}/api/projects', newProject);
+      const res = await API.post('${API_BASE_URL}/api/projects', newProject);
       
       if (res.status === 201 || res.status === 200) {
         alert('✅ Project successfully posted!');

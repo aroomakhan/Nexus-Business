@@ -8,7 +8,7 @@ import { Avatar } from '../ui/Avatar';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 import { formatDistanceToNow } from 'date-fns';
-import axios from 'axios';
+import API from '../../api/axios'; // Import the new middleman
 
 
 
@@ -105,7 +105,7 @@ export const CollaborationRequestCard: React.FC<CollaborationRequestCardProps> =
         description: `Meeting regarding project: ${request.projectName}`
       };
 
-      await axios.post('${API_BASE_URL}/api/meetings/schedule', meetingData);
+      await API.post('${API_BASE_URL}/api/meetings/schedule', meetingData);
       
       alert("✅ Meeting Scheduled Successfully!");
       

@@ -1,5 +1,7 @@
 // 1. MUST BE AT THE VERY TOP (Before any other imports)
+
 import { Buffer } from 'buffer';
+window.Buffer = Buffer;
 
 (window as any).global = window;
 (window as any).Buffer = window.Buffer || Buffer;

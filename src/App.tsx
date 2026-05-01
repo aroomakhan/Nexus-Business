@@ -1,6 +1,8 @@
-import React from 'react';
+
+import React, { useEffect } from 'react'; // Added useEffect
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { initializeUsers } from './data/users'; // Import the new initializer
 
 // Layouts
 import { DashboardLayout } from './components/layout/DashboardLayout';
@@ -38,6 +40,14 @@ import { DocumentChamber } from './pages/documents/DocumentChamber';
 
 
 function App() {
+  // Use useEffect to fetch all users from MongoDB as soon as the app starts
+  useEffect(() => {
+    const loadAppData = async () => {
+      await initializeUsers();
+    };
+    loadAppData();
+  }, []);
+
   return (
     <AuthProvider>
       <Router>

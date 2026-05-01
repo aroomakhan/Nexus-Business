@@ -7,6 +7,7 @@ import { Card, CardHeader, CardBody } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import axios from 'axios';
 import { API_BASE_URL } from '../../config';
+import API from '../../api/axios'; // Import the new middleman
 
 export const DocumentChamber: React.FC = () => {
   const { docId } = useParams();
@@ -21,7 +22,7 @@ export const DocumentChamber: React.FC = () => {
     const fetchDocument = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${API_BASE_URL}/api/documents/${docId}`);
+        const response = await API.get(`${API_BASE_URL}/api/documents/${docId}`);
         
         let data = response.data;
 
@@ -49,7 +50,7 @@ export const DocumentChamber: React.FC = () => {
 
   const handleSignatureSave = async (signatureData: string) => {
     try {
-      const response = await axios.put(`${API_BASE_URL}/api/documents/sign/${docId}`, {
+      const response = await API.put(`${API_BASE_URL}/api/documents/sign/${docId}`, {
         signatureImage: signatureData,
       });
 

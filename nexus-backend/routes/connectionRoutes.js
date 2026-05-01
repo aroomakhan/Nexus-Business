@@ -42,34 +42,6 @@ router.get('/entrepreneur/:id', async (req, res) => {
   }
 });
 
-// Update connection status (Accept/Decline)
-// router.put('/:id', async (req, res) => {
-//   try {
-//     const { status } = req.body;
-    
-//     // Validate status
-//     if (!['accepted', 'rejected', 'pending'].includes(status)) {
-//       return res.status(400).json({ message: "Invalid status" });
-//     }
-
-//     const updatedConnection = await Connection.findByIdAndUpdate(
-//       req.params.id,
-//       { status },
-//       { new: true } // Returns the updated document
-//     );
-
-//     if (!updatedConnection) {
-//       return res.status(404).json({ message: "Connection request not found" });
-//     }
-
-//     res.json(updatedConnection);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send('Server Error');
-//   }
-// });
-
-
 
 router.put('/:id', async (req, res) => {
   try {

@@ -13,6 +13,7 @@ import { getRequestsForEntrepreneur } from '../../data/collaborationRequests';
 import { investors } from '../../data/users';
 import { MeetingCalendar } from '../../components/MeetingCalendar';
 import { API_BASE_URL } from '../../config';
+import API from '../../api/axios'; // Import the new middleman
 
 interface Project {
   _id: string;
@@ -37,7 +38,7 @@ export const EntrepreneurDashboard: React.FC = () => {
           const ownerId = user.id; // Ensure we use the correct ID property
 
           // 1. FETCH REAL CONNECTION REQUESTS FROM BACKEND
-          const connRes = await axios.get(`${API_BASE_URL}/api/connections/entrepreneur/${ownerId}`);
+          const connRes = await API.get(`${API_BASE_URL}/api/connections/entrepreneur/${ownerId}`);
           
           // Map backend data to your CollaborationRequest interface
           const formattedRequests = connRes.data.map((conn: any) => ({
@@ -57,7 +58,7 @@ export const EntrepreneurDashboard: React.FC = () => {
           setCollaborationRequests(formattedRequests);
 
           // 2. FETCH PROJECTS (You already had this)
-          const projRes = await axios.get(`${API_BASE_URL}/api/projects/user/${ownerId}`);
+          const projRes = await API.get(`${API_BASE_URL}/api/projects/user/${ownerId}`);
           setMyProjects(projRes.data);
 
         } catch (err) {
@@ -75,7 +76,7 @@ export const EntrepreneurDashboard: React.FC = () => {
   const handleDeleteProject = async (projectId: string) => {
     if (window.confirm("Are you sure you want to delete this project?")) {
       try {
-        await axios.delete(`${API_BASE_URL}/api/projects/${projectId}`);
+        await API.delete(`${API_BASE_URL}/api/projects/${projectId}`);
         // Remove the project from the UI list immediately
         setMyProjects(prev => prev.filter(p => p._id !== projectId));
       } catch (err) {
@@ -96,7 +97,7 @@ export const EntrepreneurDashboard: React.FC = () => {
   const handleRequestStatusUpdate = async (requestId: string, status: 'accepted' | 'rejected') => {
     try {
       // 1. Permanent change in MongoDB
-      await axios.put(`${API_BASE_URL}/api/connections/${requestId}`, { status });
+      await API.put(`${API_BASE_URL}/api/connections/${requestId}`, { status });
 
       // 2. Immediate UI update
       setCollaborationRequests(prevRequests => 

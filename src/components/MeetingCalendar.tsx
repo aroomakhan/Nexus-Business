@@ -3,6 +3,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
+import API from '../api/axios'; // Import the new middleman
 
 const calendarStyles = `
   .react-calendar__month-view__days {
@@ -53,7 +54,7 @@ export const MeetingCalendar = () => {
         if (!storedData) return;
         const userData = JSON.parse(storedData);
         const userId = userData.id || userData._id;
-        const res = await axios.get(`${API_BASE_URL}/api/meetings/user/${userId}`);
+        const res = await API.get(`${API_BASE_URL}/api/meetings/user/${userId}`);
         setMeetings(res.data);
       } catch (err) {
         console.error("Error fetching meetings", err);

@@ -10,6 +10,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Persistence: Load user from localStorage on startup
   useEffect(() => {
     const storedUser = localStorage.getItem(USER_STORAGE_KEY);
     if (storedUser) {
@@ -29,35 +30,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const refreshUser = async () => {
-    // We use localStorage as a backup to get the ID if the state is still loading
     const storedUser = JSON.parse(localStorage.getItem(USER_STORAGE_KEY) || '{}');
     const userId = user?.id || storedUser.id || storedUser._id;
 
     if (!userId) return;
 
     try {
+      // Corrected to use backticks for template literals
       const response = await fetch(`${API_BASE_URL}/api/auth/profile/${userId}`);
       const data = await response.json();
       
       if (response.ok) {
-        // Handle both { user: { balance: 500 } } and { balance: 500 }
         const userData = data.user || data; 
         
         const updatedUser: User = { 
           ...user, 
-          ...(user ? {} : userData), // If user state is null, fill it with userData
+          ...(user ? {} : userData),
           id: userId,
           balance: Number(userData.balance) || 0,
           name: userData.name || user?.name,
           email: userData.email || user?.email,
           role: userData.role || user?.role,
-          avatarUrl: userData.avatarUrl || user?.avatarUrl || `https://ui-avatars.com/api/?name=${userData.name}&background=random`,
+          avatarUrl: userData.avatarUrl || user?.avatarUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.name)}&background=random`,
           bio: userData.bio || user?.bio || ''
         };
 
         setUser(updatedUser);
         localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(updatedUser));
-        console.log("✅ Balance successfully refreshed to:", updatedUser.balance);
       }
     } catch (error) {
       console.error("❌ Failed to refresh user data", error);
@@ -67,7 +66,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (email: string, password: string, role: UserRole): Promise<void> => {
     setIsLoading(true);
     try {
-      const response = await fetch('${API_BASE_URL}/api/auth/login', {
+      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, role }),
@@ -76,6 +75,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || 'Login failed');
 
+      // Handle nested or flat data structures from backend
       const rawUser = data.user || data;
       const loggedInUser: User = {
         id: rawUser.id || rawUser._id, 
@@ -83,7 +83,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         email: rawUser.email,
         role: rawUser.role as UserRole,
         balance: rawUser.balance ?? 0,
-        avatarUrl: `https://ui-avatars.com/api/?name=${encodeURIComponent(rawUser.name)}&background=random`,
+        avatarUrl: rawUser.avatarUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(rawUser.name)}&background=random`,
         bio: rawUser.bio || '',
         isOnline: true,
         createdAt: rawUser.createdAt || new Date().toISOString()
@@ -104,24 +104,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const register = async (name: string, email: string, password: string, role: UserRole): Promise<void> => {
     setIsLoading(true);
     try {
-      const response = await fetch('${API_BASE_URL}/api/auth/register', {
+      const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password, role }),
       });
+      
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || 'Registration failed');
+      
+      const userData = data.user || data;
       const newUser: User = {
-        id: data.user.id || data.user._id,
-        name: data.user.name,
-        email: data.user.email,
-        role: data.user.role as UserRole,
-        balance: data.user.balance ?? 0,
+        id: userData.id || userData._id,
+        name: userData.name,
+        email: userData.email,
+        role: userData.role as UserRole,
+        balance: userData.balance ?? 0,
         avatarUrl: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`,
         bio: '',
         isOnline: true,
-        createdAt: data.user.createdAt || new Date().toISOString()
+        createdAt: userData.createdAt || new Date().toISOString()
       };
+
       setUser(newUser);
       localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(newUser));
       if (data.token) localStorage.setItem('token', data.token);
@@ -143,6 +147,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const updateProfile = async (userId: string, updates: Partial<User>): Promise<void> => {
     try {
+      // In a real app, you'd perform a PATCH request to your API here
       if (user?.id === userId) {
         const updatedUser = { ...user, ...updates } as User;
         setUser(updatedUser);
@@ -163,8 +168,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     refreshUser, 
     isAuthenticated: !!user,
     isLoading,
-    forgotPassword: async () => {},
-    resetPassword: async () => {}
+    forgotPassword: async () => { toast.error("Not implemented"); },
+    resetPassword: async () => { toast.error("Not implemented"); }
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
@@ -175,7 +180,6 @@ export const useAuth = () => {
   if (context === undefined) throw new Error('useAuth must be used within an AuthProvider');
   return context;
 };
-
 // import React, { createContext, useState, useContext, useEffect } from 'react';
 // import { User, UserRole, AuthContextType } from '../types';
 // import { users as mockUsers } from '../data/users'; 

@@ -4,8 +4,8 @@ import { Card, CardHeader, CardBody } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { API_BASE_URL } from '../../config';
+import API from '../../api/axios'; // Import the new middleman
 
 export const DocumentsPage: React.FC = () => {
   const navigate = useNavigate();
@@ -13,13 +13,14 @@ export const DocumentsPage: React.FC = () => {
   const [documents, setDocuments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
     fetchDocs();
   }, []);
 
   const fetchDocs = async () => {
     try {
-      const res = await axios.get('${API_BASE_URL}/api/documents');
+      const res = await API.get('${API_BASE_URL}/api/documents');
       setDocuments(res.data);
       setLoading(false);
     } catch (err) {
@@ -40,7 +41,7 @@ export const DocumentsPage: React.FC = () => {
     formData.append('file', file);
     
     try {
-      await axios.post('${API_BASE_URL}/api/documents/upload', formData, {
+      await API.post('${API_BASE_URL}/api/documents/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       alert("File uploaded successfully!");
@@ -71,7 +72,7 @@ export const DocumentsPage: React.FC = () => {
 
   try {
     // 1. Double check your backend port (is it 5000 or 5173?)
-    const response = await axios.delete(`${API_BASE_URL}/api/documents/${id}`);
+    const response = await API.delete(`${API_BASE_URL}/api/documents/${id}`);
     
     if (response.status === 200) {
       // 2. Update the UI state immediately
@@ -220,7 +221,7 @@ export const DocumentsPage: React.FC = () => {
 
 //   const fetchDocs = async () => {
 //     try {
-//       const res = await axios.get('${API_BASE_URL}/api/documents');
+//       const res = await API.get('${API_BASE_URL}/api/documents');
 //       setDocuments(res.data);
 //       setLoading(false);
 //     } catch (err) {
@@ -244,7 +245,7 @@ export const DocumentsPage: React.FC = () => {
 //     formData.append('type', isPdf ? 'PDF' : 'DOCX');
 
 //     try {
-//       await axios.post('${API_BASE_URL}/api/documents/upload', formData, {
+//       await API.post('${API_BASE_URL}/api/documents/upload', formData, {
 //         headers: { 'Content-Type': 'multipart/form-data' }
 //       });
 //       alert("File uploaded successfully!");
