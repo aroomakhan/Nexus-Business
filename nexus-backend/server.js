@@ -16,7 +16,7 @@ const server = http.createServer(app);
  */
 const allowedOrigins = [
     'http://localhost:5173', 
-    'https://nexus-business-kyow.vercel.app' // Updated with your full Vercel URL
+    'https://nexus-business-samh.vercel.app' // Updated with your full Vercel URL
 ];
 
 // 2. INITIALIZE SOCKET.IO
